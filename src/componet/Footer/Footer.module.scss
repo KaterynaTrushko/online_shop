@@ -1,2 +1,86 @@
+@import "../../style/variables.scss" ;
+.footer{
+  background:$light-bg;
 
+  .box_container{
+      @include grid(15rem);
+
+      .box{
+
+          h3{
+              font-size: 2.2rem;
+              color:$black;
+              padding:1rem 0;
+          }
+
+          p{
+              font-size: 1.5rem;
+              color:$light-color;
+              padding:1rem 0;
+              line-height: 2;
+          }
+
+          a {
+              display: block;
+              font-size: 1.4rem;
+              color:$light-color;
+              padding:1rem 0;
+           
+              
+
+              .icon{
+                  padding-top: .5rem;
+                  padding-right: .5rem;
+                  color:$red;
+                  
+              }
+
+              &:hover{
+                  color:$red;
+              }
+
+              &:hover i{
+                  padding-right: 2rem;
+              }
+          }
+
+      }
+  }
+
+  .share{
+      padding-top: 1rem;
+      text-align: center;
+
+      .icon {
+        font-size: 2rem;
+        height: 3rem;
+        width: 3rem;
+        line-height: 3rem;
+        border-radius: 50%;
+        background:$black;
+        color:#fff;
+        margin:.3rem;
+
+          &:hover{
+              background: $red;
+              transform: rotate(360deg);
+          }
+      }
+  }
+
+  .credit{
+      margin-top: 2rem;
+      padding:1rem;
+      padding-top: 2rem;
+      border-top: $border;
+      text-align: center;
+      color:$light-color;
+      font-size: 2rem;
+
+      span{
+          color:$red;
+      }
+  }
+
+}
 
