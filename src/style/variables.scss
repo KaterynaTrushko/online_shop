@@ -1,0 +1,25 @@
+$red : #eb4d4b;
+$black : #130f40;
+$light-color : #666;
+$light-bg : #f9f9f9;
+$border : .1rem solid rgba(0,0,0,.3);
+$box-shadow : 0 .5rem 1rem rgba(0,0,0,.1);
+$section_padding:2rem 9%;
+
+
+
+@mixin grid($value) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($value, 1fr));
+    gap:1.5rem;
+}
+
+%text-stroke{
+    color:#fff;
+    cursor: pointer;
+    -webkit-text-stroke: .1rem $black;
+
+    &:hover{
+        -webkit-text-stroke: .1rem $red;
+    }
+}

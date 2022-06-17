@@ -1,0 +1,87 @@
+@import "../../style/variables.scss" ;
+
+.header{
+  position: fixed;
+  top:0; left:0; right:0;
+  z-index: 1000;
+  box-shadow: $box-shadow;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 9%;
+  background:#fff;
+}
+.wrapper{
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items: center;
+
+}
+
+ .logo {
+  text-align: center;
+  font-size: 2.5rem;
+  color:$black;
+  font-weight: bolder;
+}
+
+.logo_icon {
+  color:$red;
+  font-size: 2.5rem;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+  @extend %text-stroke;
+}
+.navbar {
+  font-size: 1.7rem;
+  color:$light-color;
+  margin:0 1rem;
+
+  &:hover{
+      color: $red;
+  }
+
+}
+
+.icons {
+  font-size: 2.5rem;
+  margin-left: 1rem;
+  @extend %text-stroke;
+  color:$light-color; 
+}
+
+
+.search_form {
+  position: absolute;
+  top:115%; right:-105%;
+  width:50rem; height:5.5rem;
+  background:#fff;
+  border-radius: .5rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: $box-shadow;
+  border:$border;
+
+  &.active{
+      right:2rem;
+      transition: .4s linear;
+  }
+}
+
+input{
+    height:100%;
+    width:100%;
+    font-size: 1.6rem;
+    text-transform: none;
+    color:$black;
+    padding:0 1.2rem;
+}
+
+label{
+    font-size: 2.2rem;
+    @extend %text-stroke;
+    margin-right: 1.7rem;
+}
+
