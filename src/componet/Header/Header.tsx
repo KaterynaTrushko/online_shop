@@ -1,62 +1,88 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import Home from "../../page/Home";
-import Products from "../../page/Products";
-import Featured from "../../page/Featured";
-import Review from "../../page/Review";
-import Contact from "../../page/Contact";
-import Blogs from "../../page/Blogs";
+import { NavLink, Link } from "react-router-dom";
 import style from "../Header/Header.module.scss";
 import { FaShoppingCart } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { AiOutlineHeart } from "react-icons/ai";
+import { BiMenu } from "react-icons/bi";
+import { useAppSelector } from "../../store/hooks";
+import { getTotalAmount } from "../../page/Cart/Cart.slice";
+import { useRef } from "react";
+import { useState } from "react";
 
-export default function Header(): JSX.Element {
+export default function Header() {
+  const [searchToggle, setSearchToggle] = useState(false);
+  const [navToggle, setNavToggle] = useState(false);
+
+  const amount = useAppSelector(getTotalAmount);
+
+  const ref = useRef<HTMLFormElement>(null);
+
+  const handleForm = () => {
+    setSearchToggle(!searchToggle);
+  };
+
   return (
     <>
       <header className={style.header}>
         <a href="#" className={style.logo}>
           <div className={style.wrapper}>
             <FaShoppingCart className={style.logo_icon} />
-            <div>shop{""} </div>
+            <div>shop{""}</div>
           </div>
         </a>
-
-        <nav>
-          <NavLink className={style.navbar} to="/">
+        <nav className={navToggle ? style.active : style.navbar}>
+          <NavLink className={style.a} to="/">
             Home
           </NavLink>
-          <NavLink className={style.navbar} to="products">
+          <NavLink className={style.a} to="products">
             Products
           </NavLink>
-          <NavLink className={style.navbar} to="featured">
+          <NavLink className={style.a} to="featured">
             Featured
           </NavLink>
-          <NavLink className={style.navbar} to="review">
+          <NavLink className={style.a} to="review">
             Review
           </NavLink>
-          <NavLink className={style.navbar} to="contact">
+          <NavLink className={style.a} to="contact">
             Contact
           </NavLink>
-          <NavLink className={style.navbar} to="blogs">
+          <NavLink className={style.a} to="blogs">
             Blogs
           </NavLink>
         </nav>
 
-        <div>
-          <BiSearch className={style.icons} />
-          <AiOutlineShoppingCart className={style.icons} />
-          <AiOutlineHeart className={style.icons} />
+        <div className={style.icons}>
+          <BiMenu
+            className={style.menu_btn}
+            onClick={() => setNavToggle(!navToggle)}
+          />
+          <BiSearch className={style.icons} onClick={handleForm} />
+          <Link to="/cart">
+            <AiOutlineShoppingCart className={style.iconCart} />
+            {amount !== 0 ? (
+              <span className={style.cart} style={{ color: "white" }}>
+                {amount}
+              </span>
+            ) : null}
+          </Link>
+          <Link className={style.a} to={"#"}>
+            <AiOutlineHeart className={style.icons} />
+          </Link>
         </div>
 
-        <form action="" className={style.search_form}>
-          <label className="fas fa-search">
+        <form
+          action=""
+          className={searchToggle ? style.search_active : style.search_passive}
+          ref={ref}
+        >
+          <label>
             <input
-              type="search"
+              className={style.input}
               name=""
               placeholder="search here..."
-              id="search-box"
+              id="search_box"
             />
           </label>
         </form>

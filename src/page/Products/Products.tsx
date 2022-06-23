@@ -17,41 +17,35 @@ export const Products: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    dispatch(productsAsync(9));
+    dispatch(productsAsync(12));
   }, [dispatch]);
 
   return (
-    <div className="products" id="products">
-      <h1 className="heading">
+    <div className={style.products} id="products">
+      <h1 className={style.heading}>
         {" "}
         exclusive <span>products</span>{" "}
       </h1>
-      <div className="filter-buttons">
-        <div className="buttons active" data-filter="all">
+      <div className={style.filter_buttons}>
+        <div className={style.buttons || style.actives} data-filter="all">
           all
         </div>
-        <div className="buttons" data-filter="arrivals">
+        <div className={style.buttons} data-filter="arrivals">
           new arrivals
         </div>
-        <div className="buttons" data-filter="featured">
+        <div className={style.buttons} data-filter="featured">
           featured
         </div>
-        <div className="buttons" data-filter="special">
+        <div className={style.buttons} data-filter="special">
           special offer
         </div>
-        <div className="buttons" data-filter="seller">
+        <div className={style.buttons} data-filter="seller">
           best seller
         </div>
       </div>
-      <div>Products</div>
-      <div className={style.container}>
+      <div className={style.box_container}>
         {products.map((product: Product) => (
-          <div className={style.box} key={product.id}>
-            {product.title}
-            <div>
-              <Card props={product} />
-            </div>
-          </div>
+          <Card props={product} key={product.id} />
         ))}
       </div>
     </div>

@@ -1,120 +1,124 @@
-@import "../../style/variables.scss" ;
+@import "../../style/variables.scss";
 
-
-.box{
-  width: 26rem;
-  border-radius: .5rem;
-  overflow: hidden;
+.box {
+  padding-bottom: 4rem;
   position: relative;
+  width: 20rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
   box-shadow: $box-shadow;
-  border:$border;
+  border: $border;
 
-  &.hide{
-      display: none;
+  &.hide {
+    display: none;
   }
 
-  &.active{
-      animation:fadeUp .4s linear;
+  &.active {
+    animation: fadeUp 0.4s linear;
   }
 
-  .icons{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,.7);
-      height: 35rem;
+  .icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    height: 18rem;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    gap: 0.5rem;
+    transform: scale(0);
+    z-index: 1;
+
+    .a {
+      font-size: 2rem;
+      color:$black  ;
+      height: 4rem;
+      width: 4rem;
+      line-height: 4.5rem;
+      text-align: center;
+      background: #fff;
+      border-radius: 0.5rem;
+      @extend %text-stroke;
+
+      &:hover{
+        color: $red;
+    }
+
+
+    }
+
+  }
+
+  &:hover .icons {
+    transform: scale(1);
+  }
+
+
+  .image {
+    height: 18rem;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      height: 100%;
       width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &:hover .image img {
+    transform: scale(1.1);
+  }
+
+  .content {
+    padding: 1rem 1.5rem;
+
+    .h3 {
+      font-size: 1rem;
+      color: $black;
+      font-weight: normal;
+    }
+
+    .price {
       position: absolute;
-      top:0; left:0;
-      gap:.5rem;
-      transform: scale(0);
-      z-index: 1;
+      bottom: 3rem;
+      padding: 0.5rem 0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
 
-      a{
-          font-size: 2rem;
-          height: 5rem;
-          width: 5rem;
-          line-height: 5rem;
-          text-align: center;
-          background:#fff;
-          border-radius: .5rem;
-          @extend %text-stroke;
+      .amount {
+        font-size: 1rem;
+        font-weight: bolder;
+        color: $black;
       }
 
-  }
-
-  &:hover .icons{
-      transform: scale(1);
-  }
-
-  .image{
-      height: 35rem;
-      width: 100%;
-      overflow: hidden;
-
-      img{
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-      }
-  }
-
-  &:hover .image img{
-      transform: scale(1.1);
-  }
-
-  .content{
-      padding:1rem 1.5rem;
-
-      h3{
-          font-size: 2rem;
-          color:$black;
-          font-weight: normal;
+      .cut {
+        font-size: 1rem;
+        text-decoration: line-through;
+        color: $light-color;
       }
 
-      .price{
-          padding:.5rem 0;
-          display: flex;
-          gap:.5rem;
-          align-items: center;
-
-          .amount{
-              font-size: 2.2rem;
-              font-weight: bolder;
-              color:$black;
-          }
-
-          .cut{
-              font-size: 1.5rem;
-              text-decoration: line-through;
-              color:$light-color;
-          }
-
-          .offer{
-              font-size: 2rem;
-              color:$red;
-          }
-
+      .offer {
+        font-size: 1rem;
+        color: $red;
       }
-
-      .stars{
-          font-size: 1.7rem;
-          
-          i{
-              color:gold;
-          }
-
-          span{
-              color:$light-color;
-          }
-      }
-
+    }
   }
 
+  .stars {
+    position: absolute;
+    bottom: 1rem;
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    color: gold;
+
+    span {
+      color: $light-color;
+    }
+  }
 }
-
-
-
-
-    
-

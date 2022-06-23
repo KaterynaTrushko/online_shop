@@ -8,10 +8,11 @@ import Review from "./page/Review";
 import Contact from "./page/Contact";
 import Blogs from "./page/Blogs";
 import Layout from "./componet/Layout/Layout";
+import { Cart } from "./page/Cart";
 
 function App() {
   return (
-    <>
+    <div>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -20,9 +21,10 @@ function App() {
           <Route path="review" element={<Review />} />
           <Route path="contact" element={<Contact />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
-    </>
+    </div>
   );
 }
 

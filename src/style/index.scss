@@ -1,22 +1,11 @@
-// No media query necessary for xs breakpoint as it's effectively `@media (max-width: 0) { ... }`
-// @include media-breakpoint-down(sm) { ... }
-// @include media-breakpoint-down(md) { ... }
-// @include media-breakpoint-down(lg) { ... }
-// @include media-breakpoint-down(xl) { ... }
-// @include media-breakpoint-down(xxl) { ... }
-
-// // Example: Style from medium breakpoint and down
-// @include media-breakpoint-down(md) {
-//   .custom-class {
-//     display: block;
-//   }
-// }
 
 @import-normalize;
 
 @import "./variables.scss" ;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;1,100;1,300&display=swap');
+
+@import "~bootstrap/scss/bootstrap";
 
 *{
     font-family: 'Poppins', sans-serif;
@@ -33,6 +22,7 @@
   scroll-behavior: smooth;
   scroll-padding-top: 7rem;
   overflow-x: hidden;
+  padding:2rem 9%;
 
   &::-webkit-scrollbar{
       width:1rem;
@@ -48,7 +38,4 @@
   }
 }
 
-section {
-  padding:2rem 9%;
-}
 

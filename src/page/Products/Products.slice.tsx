@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
+import { PURGE } from "redux-persist";
+import axios from "axios";
 
 export type Product = {
   id: number;
@@ -29,7 +31,9 @@ export const productsAsync = createAsyncThunk<
   number,
   { rejectValue: FetchTodosError }
 >("products/productsAsync", async (a: number, thunkApi) => {
-  const response = await fetch(`https://fakestoreapi.com/products?limit=${a}`);
+  const response = await axios.get(
+    `https://fakestoreapi.com/products?limit=${a}`
+  );
   // Check if status is not okay:
   if (response.status !== 200) {
     // Return the error message:
@@ -37,7 +41,7 @@ export const productsAsync = createAsyncThunk<
       message: "Failed to fetch todos.",
     });
   }
-  const data = await response.json();
+  const data = await response.data;
   return data as Product[];
 });
 
@@ -62,4 +66,5 @@ export const counterSlice = createSlice({
 });
 
 export default counterSlice.reducer;
-export const selectCount = (state: RootState) => state.products.value;
+export const selectCount = (state: RootState) =>
+  state.persistedReducer.products.value;
