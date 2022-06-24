@@ -48,7 +48,17 @@ export const productsAsync = createAsyncThunk<
 export const counterSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    searchByTitle: (state, action: PayloadAction<string>) => {
+      state.value.filter(function (product) {
+        return (
+          product.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
+          -1
+        );
+        console.log(state.value);
+      });
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -65,6 +75,7 @@ export const counterSlice = createSlice({
   },
 });
 
+export const { searchByTitle } = counterSlice.actions;
 export default counterSlice.reducer;
 export const selectCount = (state: RootState) =>
   state.persistedReducer.products.value;

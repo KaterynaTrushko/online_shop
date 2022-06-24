@@ -10,6 +10,10 @@ import { useAppSelector } from "../../store/hooks";
 import { getTotalAmount } from "../../page/Cart/Cart.slice";
 import { useRef } from "react";
 import { useState } from "react";
+import { useAppDispatch } from "../../store/hooks";
+import { searchByTitle } from "../../page/Products/index";
+import { current } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 
 export default function Header() {
   const [searchToggle, setSearchToggle] = useState(false);
@@ -19,8 +23,19 @@ export default function Header() {
 
   const ref = useRef<HTMLFormElement>(null);
 
+  const dispatch = useAppDispatch();
+
   const handleForm = () => {
     setSearchToggle(!searchToggle);
+  };
+
+  const handleSearch = (e: any) => {
+    dispatch(searchByTitle(e.target.value));
+    console.log(e.target.value);
+  };
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
   };
 
   return (
@@ -48,8 +63,8 @@ export default function Header() {
           <NavLink className={style.a} to="contact">
             Contact
           </NavLink>
-          <NavLink className={style.a} to="blogs">
-            Blogs
+          <NavLink className={style.a} to="detail">
+            Detail
           </NavLink>
         </nav>
 
@@ -73,12 +88,17 @@ export default function Header() {
         </div>
 
         <form
+          onSubmit={(e) => handleSubmit(e)}
+          onChange={(e) => {
+            handleSearch(e);
+          }}
           action=""
           className={searchToggle ? style.search_active : style.search_passive}
           ref={ref}
         >
           <label>
             <input
+              // value={}
               className={style.input}
               name=""
               placeholder="search here..."

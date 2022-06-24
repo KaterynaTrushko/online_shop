@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 
 export const persistConfig = {
   key: "root",
-  blacklist: ["products"],
+  // blacklist: ["products"],
   storage,
 };
 

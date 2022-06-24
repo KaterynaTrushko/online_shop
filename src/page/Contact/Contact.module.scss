@@ -1,0 +1,101 @@
+@import "../../style/variables.scss" ;
+
+.contact{
+
+  .icons_container{
+      @include grid(25rem);
+
+      .icons{
+          padding: 2rem;
+          border-radius: .5rem;
+          border:$border;
+          box-shadow: $box-shadow;
+          text-align: center;
+
+          .i{
+              font-size: 4rem;
+              color:$light-color;
+              height: 5rem;
+              width: 5rem;
+              border:$border;
+              @extend %text-stroke;
+              border-radius: 50%;
+
+
+          }
+
+          h3{
+              font-size: 2.2rem;
+              padding:1rem 0;
+              color:$black;
+          }
+
+          p{
+              font-size: 1.5rem;
+              line-height: 2;
+              color:$light-color;
+              text-transform:none;
+          }
+      }
+  }
+
+  .row{
+      display: flex;
+      flex-wrap: wrap;
+      gap:1.5rem;
+      margin-top: 2rem;
+
+      form{
+          flex:1 1 42rem;
+          padding:2rem;
+          border:$border;
+          box-shadow: $box-shadow;
+          border-radius: .5rem;
+
+          h3{
+              font-size: 3rem;
+              padding-bottom: 1rem;
+              color:$black;
+          }
+
+          .inputBox{
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
+
+              input{
+                  width: 49%;
+              }
+          }
+
+          .inputBox input,
+          textarea {
+              border:$border;
+              border-radius: .5rem;
+              padding:1rem 1.2rem;
+              font-size: 1.6rem;
+              color:$black;
+              text-transform: none;
+              margin:.7rem 0;
+          }
+
+          textarea {
+              height: 15rem;
+              resize: none;
+              width: 100%;
+          }
+
+      }
+
+      .map{
+          flex:1 1 42rem;
+          width: 100%;
+          padding:2rem;
+          border:$border;
+          border-radius: .5rem;
+          box-shadow: $box-shadow;
+      }
+
+  }
+
+}

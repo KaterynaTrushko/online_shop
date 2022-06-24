@@ -5,8 +5,8 @@ import Home from "./page/Home";
 import { Products } from "./page/Products";
 import Featured from "./page/Featured";
 import Review from "./page/Review";
-import Contact from "./page/Contact";
-import Blogs from "./page/Blogs";
+import { Contact } from "./page/Contact/index";
+import Detail from "./page/Detail";
 import Layout from "./componet/Layout/Layout";
 import { Cart } from "./page/Cart";
 
@@ -20,7 +20,7 @@ function App() {
           <Route path="featured" element={<Featured />} />
           <Route path="review" element={<Review />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="blogs" element={<Blogs />} />
+          <Route path="detail" element={<Detail />} />
           <Route path="cart" element={<Cart />} />
         </Route>
       </Routes>
