@@ -36,8 +36,38 @@
             &.active{
                 color:$red;
             }
+       
         }
+
+
     }
+
+    .select{
+        margin: 2rem;
+        border: $border;
+        border-radius: 0.3rem;
+        color:$light-color;
+        font-size: 1.5rem;
+        text-transform: capitalize;
+    }
+
+    .option{
+        font-size: 1rem;
+        color:$light-color;
+        padding-bottom: 1.2rem;
+     
+    }
+
+    @media (max-width: 750px) {
+        .select {
+            display: flex;
+            justify-content: center;
+            margin-right: auto;
+            margin-left: auto;
+        }  
+    }
+    
+
 
     .box_container{
         display: flex;
@@ -160,7 +190,6 @@
     }
 
 }
-
 
 
 

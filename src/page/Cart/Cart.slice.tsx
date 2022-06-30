@@ -78,9 +78,6 @@ export const {
 
 export default cartSlice.reducer;
 
-export const getCartSelecror = (state: RootState) =>
-  state.persistedReducer.cart.items;
-export const getTotalPrice = (state: RootState) =>
-  state.persistedReducer.cart.totalPrice;
-export const getTotalAmount = (state: RootState) =>
-  state.persistedReducer.cart.totalAmount;
+export const getCartSelecror = (state: RootState) => state.cart.items;
+export const getTotalPrice = (state: RootState) => state.cart.totalPrice;
+export const getTotalAmount = (state: RootState) => state.cart.totalAmount;

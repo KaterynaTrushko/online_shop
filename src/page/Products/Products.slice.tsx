@@ -1,81 +1,123 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { PURGE } from "redux-persist";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { DetailState } from "../Detail/Details.slice";
+import { title } from "process";
 
-export type Product = {
+export interface Product {
   id: number;
   title: string;
   price: string;
   category: string;
   description: string;
   image: string;
-};
+  rating?: { rate: number; count: number };
+}
 
-export interface ProductState {
-  value: Product[];
-  status: "idle" | "loading" | "failed";
+interface ProductState {
+  products: {
+    data: Array<Product>;
+    status: "idle" | "loading" | "succeeded" | "failed";
+  };
+  filterTitle: {
+    data: Array<Product>;
+    status: "idle" | "loading" | "succeeded" | "failed";
+  };
+  filterCategory: {
+    data: Array<Product>;
+    status: "idle" | "loading" | "succeeded" | "failed";
+  };
 }
 
 const initialState: ProductState = {
-  value: [],
-  status: "idle",
+  products: {
+    data: [],
+    status: "idle",
+  },
+  filterTitle: {
+    data: [],
+    status: "idle",
+  },
+  filterCategory: {
+    data: [],
+    status: "idle",
+  },
 };
 
-type FetchTodosError = {
-  message: string;
-};
-
-export const productsAsync = createAsyncThunk<
-  Product[],
-  number,
-  { rejectValue: FetchTodosError }
->("products/productsAsync", async (a: number, thunkApi) => {
-  const response = await axios.get(
-    `https://fakestoreapi.com/products?limit=${a}`
-  );
-  // Check if status is not okay:
-  if (response.status !== 200) {
-    // Return the error message:
-    return thunkApi.rejectWithValue({
-      message: "Failed to fetch todos.",
-    });
+export const productsAsync = createAsyncThunk<Product[]>(
+  "products/productsAsync",
+  async (thunkApi) => {
+    const response = await axios.get(`https://fakestoreapi.com/products`);
+    const data = await response.data;
+    return data as Product[];
   }
-  const data = await response.data;
-  return data as Product[];
-});
+);
 
-export const counterSlice = createSlice({
+export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
     searchByTitle: (state, action: PayloadAction<string>) => {
-      state.value.filter(function (product) {
-        return (
-          product.title.toLowerCase().indexOf(action.payload.toLowerCase()) !==
-          -1
-        );
-        console.log(state.value);
-      });
+      const arr = state.products.data;
+      return {
+        ...state,
+        filterTitle: {
+          ...state.filterTitle,
+
+          data: [
+            ...arr.filter((el) =>
+              el.title.toLowerCase().includes(action.payload.toLowerCase())
+            ),
+          ],
+          status: "succeeded",
+        },
+      };
+    },
+    searchByCategory: (state, action: PayloadAction<string>) => {
+      const arr = state.products.data;
+      return {
+        ...state,
+        filterCategory: {
+          ...state.filterCategory,
+
+          data: [...arr.filter((el) => el.category === action.payload)],
+          status: "succeeded",
+        },
+      };
     },
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(productsAsync.pending, (state) => {
-        state.status = "loading";
+        state.products.status = "loading";
       })
       .addCase(productsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.value = action.payload;
+        state.products.status = "succeeded";
+        state.products.data = action.payload;
       })
       .addCase(productsAsync.rejected, (state) => {
-        state.status = "failed";
+        state.filterTitle.status = "failed";
       });
   },
 });
 
-export const { searchByTitle } = counterSlice.actions;
-export default counterSlice.reducer;
-export const selectCount = (state: RootState) =>
-  state.persistedReducer.products.value;
+export default productSlice.reducer;
+
+export const { searchByTitle } = productSlice.actions;
+
+export const { searchByCategory } = productSlice.actions;
+
+export const selectProducts = (state: RootState) =>
+  state.products.products.data;
+
+export const selectSearchTyTitle = (state: RootState) =>
+  state.products.filterTitle;
+
+export const selectByCategory = (state: RootState) =>
+  state.products.filterTitle.data;
+// IDLE: The request hasn't started yet
+// PENDING: The request is in flight, and hasn't finished
+// FAILED: The request finished, and failed
+// SUCCEEDED: The request finished, and was successful

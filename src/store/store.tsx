@@ -5,25 +5,34 @@ import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { createTransform } from "redux-persist";
-import { type Product } from "../page/Products/index";
-import thunk from "redux-thunk";
+import { Product } from "../page/Products/Products.slice";
+import detailReduser from "../page/Detail/index";
 
-export const persistConfig = {
-  key: "root",
-  // blacklist: ["products"],
-  storage,
-};
+// export const persistConfig = {
+//   key: "root",
+//   // blacklist: ["products", "detail"],
+//   storage,
+// };
 
-const reduser = combineReducers({
-  products: productsReduser,
-  cart: cartReducer,
-});
+// const reduser = combineReducers({
+//   products: productsReduser,
+//   cart: cartReducer,
+//   detail: detailReduser,
+// });
 
-const persistedReducer = persistReducer(persistConfig, reduser);
+// const persistedReducer = persistReducer(persistConfig, reduser);
+
+// export const store = configureStore({
+//   reducer: {
+//     persistedReducer,
+//   },
+// });
 
 export const store = configureStore({
   reducer: {
-    persistedReducer,
+    products: productsReduser,
+    cart: cartReducer,
+    detail: detailReduser,
   },
 });
 

@@ -4,24 +4,21 @@ import style from "../Header/Header.module.scss";
 import { FaShoppingCart } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
-import { AiOutlineHeart } from "react-icons/ai";
 import { BiMenu } from "react-icons/bi";
 import { useAppSelector } from "../../store/hooks";
 import { getTotalAmount } from "../../page/Cart/Cart.slice";
-import { useRef } from "react";
 import { useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
+import { selectProducts } from "../../page/Products/index";
 import { searchByTitle } from "../../page/Products/index";
-import { current } from "@reduxjs/toolkit";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [searchToggle, setSearchToggle] = useState(false);
   const [navToggle, setNavToggle] = useState(false);
+  const [title, setTitle] = useState("");
 
   const amount = useAppSelector(getTotalAmount);
-
-  const ref = useRef<HTMLFormElement>(null);
 
   const dispatch = useAppDispatch();
 
@@ -29,19 +26,31 @@ export default function Header() {
     setSearchToggle(!searchToggle);
   };
 
-  const handleSearch = (e: any) => {
-    dispatch(searchByTitle(e.target.value));
-    console.log(e.target.value);
+  const products = useAppSelector(selectProducts);
+
+  const navigate = useNavigate();
+
+  const display = () => {
+    navigate("/");
   };
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(searchByTitle(title));
+    console.log(title);
+    setTitle("");
+    setSearchToggle(!searchToggle);
+    display();
+  };
+
+  const onCangeHendler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
   };
 
   return (
     <>
       <header className={style.header}>
-        <a href="#" className={style.logo}>
+        <a href="/" className={style.logo}>
           <div className={style.wrapper}>
             <FaShoppingCart className={style.logo_icon} />
             <div>shop{""}</div>
@@ -54,17 +63,11 @@ export default function Header() {
           <NavLink className={style.a} to="products">
             Products
           </NavLink>
-          <NavLink className={style.a} to="featured">
-            Featured
-          </NavLink>
           <NavLink className={style.a} to="review">
             Review
           </NavLink>
           <NavLink className={style.a} to="contact">
             Contact
-          </NavLink>
-          <NavLink className={style.a} to="detail">
-            Detail
           </NavLink>
         </nav>
 
@@ -82,23 +85,16 @@ export default function Header() {
               </span>
             ) : null}
           </Link>
-          <Link className={style.a} to={"#"}>
-            <AiOutlineHeart className={style.icons} />
-          </Link>
         </div>
 
         <form
-          onSubmit={(e) => handleSubmit(e)}
-          onChange={(e) => {
-            handleSearch(e);
-          }}
-          action=""
+          onSubmit={(e) => submitHandler(e)}
           className={searchToggle ? style.search_active : style.search_passive}
-          ref={ref}
         >
           <label>
             <input
-              // value={}
+              value={title}
+              onChange={(e) => onCangeHendler(e)}
               className={style.input}
               name=""
               placeholder="search here..."

@@ -1,5 +1,5 @@
 import React from "react";
-import { type Product } from "../../page/Products";
+import { type Product } from "../../page/Products/Products.slice";
 import style from "../Card/Card.module.scss";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
@@ -9,6 +9,7 @@ import { FiSearch } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
 import { addProductToCart, getCartTotal } from "../../page/Cart/Cart.slice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { Detail } from "../../page/Detail";
 
 export const Card: React.FC<{ props: Product }> = ({ props }): JSX.Element => {
   const { id, title, price, category, description, image } = props;
@@ -43,7 +44,7 @@ export const Card: React.FC<{ props: Product }> = ({ props }): JSX.Element => {
           <Link to={"#"} className={style.a}>
             <FiSearch className="style.active" />
           </Link>
-          <Link to={"#"} className={style.a}>
+          <Link to={`/detail/${id}`} className={style.a}>
             <BsEye className="style.active" />
           </Link>
         </div>

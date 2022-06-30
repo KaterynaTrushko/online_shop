@@ -13,7 +13,7 @@ import {
 
 export function Cart() {
   const { totalAmount, totalPrice, items } = useAppSelector(
-    (state) => state.persistedReducer.cart
+    (state) => state.cart
   );
   const dispatch = useAppDispatch();
 
