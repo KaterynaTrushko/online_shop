@@ -11,7 +11,12 @@ import { addProductToCart, getCartTotal } from "../../page/Cart/Cart.slice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Detail } from "../../page/Detail";
 
-export const Card: React.FC<{ props: Product }> = ({ props }): JSX.Element => {
+interface Props {
+  props: Product;
+  children?: React.ReactNode;
+}
+
+export const Card: React.FC<{ props: Product }> = ({ props }) => {
   const { id, title, price, category, description, image } = props;
 
   function getRandomInt() {

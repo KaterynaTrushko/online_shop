@@ -9,9 +9,9 @@ import { useAppSelector } from "../../store/hooks";
 import { getTotalAmount } from "../../page/Cart/Cart.slice";
 import { useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
-import { selectProducts } from "../../page/Products/index";
 import { searchByTitle } from "../../page/Products/index";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Header() {
   const [searchToggle, setSearchToggle] = useState(false);
@@ -19,17 +19,13 @@ export default function Header() {
   const [title, setTitle] = useState("");
 
   const amount = useAppSelector(getTotalAmount);
-
   const dispatch = useAppDispatch();
 
   const handleForm = () => {
     setSearchToggle(!searchToggle);
   };
 
-  const products = useAppSelector(selectProducts);
-
   const navigate = useNavigate();
-
   const display = () => {
     navigate("/");
   };
@@ -37,7 +33,6 @@ export default function Header() {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(searchByTitle(title));
-    console.log(title);
     setTitle("");
     setSearchToggle(!searchToggle);
     display();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useCallback } from "react";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../store/hooks";
 import { useAppSelector } from "../../store/hooks";
@@ -7,87 +7,91 @@ import { productsAsync } from "./index";
 import { Product } from "./index";
 import { Card } from "../../componet/Card";
 import style from "./Products.module.scss";
-import { selectSearchTyTitle } from "./index";
-import { useState } from "react";
+import { selectSearchByTitle } from "./index";
 import { searchByCategory } from "./index";
+import { selectByCategory } from "./index";
+import Skeleton from "../../componet/Skeleton";
+import { useState } from "react";
+import { useMemo } from "react";
+import { RootState } from "../../store/store";
 
-export const Products: React.FC = (): JSX.Element => {
-  const products = useAppSelector(selectProducts);
-  const { status, data } = useAppSelector(selectSearchTyTitle);
-  const [category, setCategory] = useState("");
-
+export const Products = () => {
   const dispatch = useAppDispatch();
+  const [isSelected, setIsSlected] = useState("all");
 
   useEffect(() => {
     dispatch(productsAsync());
   }, [dispatch]);
 
-  let renderList = () => {
-    if (data.length == 0) {
-      return products;
-    } else {
-      return data;
-    }
-  };
-
-  let renderProducts = renderList();
-  console.log(renderProducts);
-
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.currentTarget.value === "all") {
-      setCategory("");
-    } else {
-      setCategory(e.currentTarget.value);
-    }
-    console.log;
-  };
+  const titleProducts = useAppSelector(selectSearchByTitle);
 
   useEffect(() => {
-    dispatch(searchByCategory(category));
-  }, [category]);
+    dispatch(searchByCategory(isSelected));
+  }, [dispatch, isSelected]);
+
+  const products = useAppSelector(selectProducts);
+  const categoryProducts = useAppSelector(selectByCategory);
+
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) =>
+    setIsSlected(e.currentTarget.value);
+
+  let productsDisp = products.data.map((product: Product) => (
+    <Card props={product} key={product.id} />
+  ));
+  let categDisp = categoryProducts.data.map((product: Product) => (
+    <Card props={product} key={product.id} />
+  ));
+  let titleDisp = titleProducts.data.map((product: Product) => (
+    <Card props={product} key={product.id} />
+  ));
 
   return (
     <div className={style.products} id="products">
-      <h1 className={style.heading}>
-        {" "}
-        exclusive <span>products</span>{" "}
-      </h1>
+      <>
+        <h1 className={style.heading}>
+          exclusive <span>products</span>{" "}
+        </h1>
 
-      <div className={style.filter_buttons} onClick={() => {}}>
-        <div className={style.buttons}>all</div>
-        <div className={style.buttons}>electronics</div>
-        <div className={style.buttons}>jewellery</div>
-        <div className={style.buttons}>men's clothing</div>
-        <div className={style.buttons}>women's clothing</div>
-      </div>
-      <select
-        className={style.select}
-        name="categories"
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelect(e)}
-      >
-        <option className={style.option} value="electronics">
-          electronics
-        </option>
-        <option className={style.option} value="all">
-          electronics
-        </option>
-        <option className={style.option} value="jewellery">
-          jewellery
-        </option>
-        <option className={style.option} value="men's clothing">
-          men's clothing
-        </option>
-        <option className={style.option} value="women's clothing">
-          women's clothing
-        </option>
-      </select>
-      <div className={style.box_container}>
-        {renderProducts.map((product: Product) => (
-          <Card props={product} key={product.id} />
-        ))}
-      </div>
+        <div className={style.filter_buttons} onClick={() => {}}>
+          <div className={style.buttons}>all</div>
+          <div className={style.buttons}>electronics</div>
+          <div className={style.buttons}>jewellery</div>
+          <div className={style.buttons}>men's clothing</div>
+          <div className={style.buttons}>women's clothing</div>
+        </div>
+        <select
+          className={style.select}
+          name="categories"
+          onChange={handleSelect}
+        >
+          <option className={style.option} value="all">
+            all
+          </option>
+          <option className={style.option} value="electronics">
+            electronics
+          </option>
+          <option className={style.option} value="jewelery">
+            jewellery
+          </option>
+          <option className={style.option} value="men's clothing">
+            men's clothing
+          </option>
+          <option className={style.option} value="women's clothing">
+            women's clothing
+          </option>
+        </select>
+        <div className={style.box_container}>
+          {categoryProducts.data.length > 1 && categDisp}
+
+          {titleProducts.data.length || categoryProducts.data.length
+            ? titleDisp || categDisp
+            : products.status !== "succeeded"
+            ? [...new Array(8)].map((product: Product, ind) => (
+                <Skeleton key={ind} />
+              ))
+            : productsDisp}
+        </div>
+      </>
     </div>
   );
 };

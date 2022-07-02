@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import { PURGE } from "redux-persist";
 import axios, { AxiosResponse } from "axios";
-import { DetailState } from "../Detail/Details.slice";
-import { title } from "process";
 
 export interface Product {
   id: number;
@@ -54,6 +51,19 @@ export const productsAsync = createAsyncThunk<Product[]>(
   }
 );
 
+// export const productsFilter = createAsyncThunk<Product[], string>(
+//   "products/productsFilter",
+//   async (category, thunkApi) => {
+//     const response = await axios.get(`https://fakestoreapi.com/products`);
+//     const data = await response.data;
+//     let newData = data.filter((el: Product) => {
+//       el.category === category;
+//       return true;
+//     });
+//     return newData;
+//   }
+// );
+
 export const productSlice = createSlice({
   name: "products",
   initialState,
@@ -64,7 +74,6 @@ export const productSlice = createSlice({
         ...state,
         filterTitle: {
           ...state.filterTitle,
-
           data: [
             ...arr.filter((el) =>
               el.title.toLowerCase().includes(action.payload.toLowerCase())
@@ -75,13 +84,16 @@ export const productSlice = createSlice({
       };
     },
     searchByCategory: (state, action: PayloadAction<string>) => {
-      const arr = state.products.data;
+      // const arr = state.products.data;
       return {
         ...state,
         filterCategory: {
           ...state.filterCategory,
-
-          data: [...arr.filter((el) => el.category === action.payload)],
+          data: [
+            ...state.products.data.filter(
+              (el) => el.category === action.payload
+            ),
+          ],
           status: "succeeded",
         },
       };
@@ -109,15 +121,10 @@ export const { searchByTitle } = productSlice.actions;
 
 export const { searchByCategory } = productSlice.actions;
 
-export const selectProducts = (state: RootState) =>
-  state.products.products.data;
+export const selectProducts = (state: RootState) => state.products.products;
 
-export const selectSearchTyTitle = (state: RootState) =>
+export const selectSearchByTitle = (state: RootState) =>
   state.products.filterTitle;
 
 export const selectByCategory = (state: RootState) =>
-  state.products.filterTitle.data;
-// IDLE: The request hasn't started yet
-// PENDING: The request is in flight, and hasn't finished
-// FAILED: The request finished, and failed
-// SUCCEEDED: The request finished, and was successful
+  state.products.filterCategory;

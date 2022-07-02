@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import productsReduser from "../page/Products/index";
 import cartReducer from "../page/Cart/index";
+import usersReducer from "../page/Contact/index";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
@@ -33,6 +34,7 @@ export const store = configureStore({
     products: productsReduser,
     cart: cartReducer,
     detail: detailReduser,
+    users: usersReducer,
   },
 });
 
