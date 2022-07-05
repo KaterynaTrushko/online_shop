@@ -1,11 +1,16 @@
 @import "../../style/variables.scss" ;
 
 .review{
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   background: $light-bg;
 
-  .slide{
+  .title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .slide{   
       border-radius: .5rem;
       background:#fff;
       border:$border;
