@@ -1,7 +1,7 @@
 import React from "react";
 import { data } from "./data";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, EffectFade, Pagination } from "swiper";
+import { Autoplay, Navigation, Pagination } from "swiper";
 import "swiper/scss";
 import "swiper/scss/effect-fade";
 import "swiper/scss/navigation";
@@ -43,7 +43,7 @@ export default function Review() {
                     nam commodi.
                   </p>
                   <div className={style.user}>
-                    <img src={el.img} alt="photo" />
+                    <img src={el.img} alt="" />
                     <div className={style.info}>
                       <h3>john deo</h3>
                       <span>happy client</span>

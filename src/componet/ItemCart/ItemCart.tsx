@@ -1,17 +1,13 @@
-import { current } from "@reduxjs/toolkit";
 import React from "react";
-import { Container, Card, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col } from "react-bootstrap";
 import { Cart } from "../../page/Cart/Cart.slice";
-import { useEffect } from "react";
 import {
   addProductToCart,
   decriseProductFromCart,
   removeItemFromCart,
 } from "../../page/Cart/Cart.slice";
-import { getTotalPrice } from "../../page/Cart/Cart.slice";
 import { useAppDispatch } from "../../store/hooks";
-import { useAppSelector } from "../../store/hooks";
-import style from "./ItemCart.module.scss";
+// import style from "./ItemCart.module.scss";
 
 interface Props {
   item: Cart;
@@ -19,12 +15,6 @@ interface Props {
 
 export default function ItemCart({ item }: Props) {
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const incrementCount = () => {
-      dispatch(addProductToCart(item));
-    };
-  }, [item.amount]);
 
   const remove = () => {
     dispatch(removeItemFromCart(item.id));

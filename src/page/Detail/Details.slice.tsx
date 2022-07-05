@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import { PURGE } from "redux-persist";
 import axios from "axios";
 import { Product } from "../Products/Products.slice";
 

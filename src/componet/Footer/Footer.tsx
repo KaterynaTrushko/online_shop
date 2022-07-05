@@ -1,6 +1,5 @@
 import React from "react";
 import style from "./Footer.module.scss";
-import { MdOutlineFacebook } from "react-icons/md";
 import { TiSocialFacebook } from "react-icons/ti";
 import { TiSocialTwitter } from "react-icons/ti";
 import { TiSocialPinterest } from "react-icons/ti";
@@ -9,7 +8,6 @@ import { TiSocialInstagram } from "react-icons/ti";
 import { FaArrowRight } from "react-icons/fa";
 import { useAppDispatch } from "../../store/hooks";
 import { filterByCategory } from "../../page/Products/index";
-import { useNavigate } from "react-router-dom";
 import { productsAsync } from "../../page/Products/index";
 
 export default function Footer(): JSX.Element {
@@ -35,74 +33,69 @@ export default function Footer(): JSX.Element {
 
           <div className={style.box}>
             <h3>quick links</h3>
-            <a href="#">
+            <a href="/#">
               {" "}
               <FaArrowRight className={style.icon} /> home{" "}
             </a>
-            <a href="#">
+            <a href="/#">
               {" "}
               <FaArrowRight className={style.icon} /> products{" "}
             </a>
-            <a href="#">
-              {" "}
+            <a href="/#">
               <FaArrowRight className={style.icon} /> featured{" "}
             </a>
-            <a href="#">
-              {" "}
+            <a href="/#">
               <FaArrowRight className={style.icon} /> review{" "}
             </a>
-            <a href="#">
-              {" "}
+            <a href="/#">
               <FaArrowRight className={style.icon} /> contact{" "}
             </a>
           </div>
 
           <div className={style.box}>
             <h3>extra links</h3>
-            <a href="#">
-              {" "}
+            <a href="/#">
               <FaArrowRight className={style.icon} />
               my order{" "}
             </a>
-            <a href="#">
+            <a href="/#">
               {" "}
               <FaArrowRight className={style.icon} /> my account{" "}
             </a>
-            <a href="#">
-              {" "}
+            <a href="/#">
               <FaArrowRight className={style.icon} /> my listing{" "}
             </a>
-            <a href="#">
+            <a href="/#">
               <FaArrowRight className={style.icon} /> sell now{" "}
             </a>
-            <a href="#">
+            <a href="/#">
               <FaArrowRight className={style.icon} /> new offers{" "}
             </a>
           </div>
 
           <div className={style.box}>
             <h3>category</h3>
-            <a href="#" onClick={() => dispatch(productsAsync())}>
+            <a href="/#" onClick={() => dispatch(productsAsync())}>
               <FaArrowRight className={style.icon} />
               all
             </a>
             <a
-              href="#"
+              href="/#"
               onClick={() => dispatch(filterByCategory("men's clothing"))}
             >
               <FaArrowRight className={style.icon} />
               men
             </a>
-            <a href="#" onClick={(e) => handlerCategor(e)}>
+            <a href="/#" onClick={(e) => handlerCategor(e)}>
               <FaArrowRight className={style.icon} /> women{" "}
             </a>
             <a
-              href="#"
+              href="/#"
               onClick={() => dispatch(filterByCategory("electronics"))}
             >
               <FaArrowRight className={style.icon} /> electronics
             </a>
-            <a href="#" onClick={() => dispatch(filterByCategory("jewelery"))}>
+            <a href="/#" onClick={() => dispatch(filterByCategory("jewelery"))}>
               <FaArrowRight className={style.icon} /> jewelery
             </a>
           </div>

@@ -24,7 +24,7 @@ export const cartSlice = createSlice({
   reducers: {
     addProductToCart: (state, action: PayloadAction<Product>) => {
       const indexProduct = state.items.findIndex(
-        (product) => product.id == action.payload.id
+        (product) => product.id === action.payload.id
       );
       if (indexProduct !== -1) {
         state.items[indexProduct].amount += 1;
@@ -35,7 +35,7 @@ export const cartSlice = createSlice({
     decriseProductFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items
         .map((item) => {
-          if (item.id == action.payload) {
+          if (item.id === action.payload) {
             return { ...item, amount: item.amount - 1 };
           }
           return item;

@@ -8,14 +8,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
 import { addProductToCart, getCartTotal } from "../../page/Cart/Cart.slice";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch } from "../../store/hooks";
 import { getDetails } from "../../page/Detail/index";
-import { Detail } from "../../page/Detail";
-
-interface Props {
-  props: Product;
-  children?: React.ReactNode;
-}
 
 export const Card: React.FC<{ props: Product }> = ({ props }) => {
   const { id, title, price, category, description, image } = props;
@@ -77,7 +71,7 @@ export const Card: React.FC<{ props: Product }> = ({ props }) => {
                 <AiFillStar />
               </div>
             ))}
-            {arrStarts.length == 4 ? <AiOutlineStar /> : null}
+            {arrStarts.length === 4 ? <AiOutlineStar /> : null}
           </div>
         </div>
       </div>

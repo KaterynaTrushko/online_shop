@@ -4,12 +4,7 @@ import ItemCart from "../../componet/ItemCart";
 import style from "./Cart.module.scss";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import {
-  getCartSelecror,
-  getTotalPrice,
-  getTotalAmount,
-  getCartTotal,
-} from "./Cart.slice";
+import { getCartTotal } from "./Cart.slice";
 
 export function Cart() {
   const { totalAmount, totalPrice, items } = useAppSelector(
@@ -19,7 +14,7 @@ export function Cart() {
 
   useEffect(() => {
     dispatch(getCartTotal());
-  }, [items]);
+  }, [dispatch, items]);
 
   return (
     <Container className={style.container}>

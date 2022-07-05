@@ -1,11 +1,6 @@
-import {
-  AnyAction,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export interface Product {
   id: number;
@@ -67,7 +62,7 @@ export const productSlice = createSlice({
           ...state.products,
           data: [
             ...state.products.data.filter(
-              (el) => el.category == action.payload
+              (el) => el.category === action.payload
             ),
           ],
           status: "succeeded",

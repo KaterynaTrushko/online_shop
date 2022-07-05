@@ -1,10 +1,8 @@
-import React, { HtmlHTMLAttributes, JSXElementConstructor } from "react";
 import style from "./Contact.module.scss";
 import { AiOutlineMail } from "react-icons/ai";
 import { AiOutlinePhone } from "react-icons/ai";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { Formik, Form, Field, FieldProps } from "formik";
-import { User } from "./Contact.slice";
+import { Formik, Form, Field } from "formik";
 import { addUser } from "../Contact/Contact.slice";
 import { useAppDispatch } from "../../store/hooks";
 

@@ -9,9 +9,8 @@ import { useAppSelector } from "../../store/hooks";
 import { getTotalAmount } from "../../page/Cart/Cart.slice";
 import { useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
-import { productsAsync, searchByTitle } from "../../page/Products/index";
+import { searchByTitle } from "../../page/Products/index";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 export default function Header() {
   const [searchToggle, setSearchToggle] = useState(false);

@@ -1,7 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useTheme } from "styled-components";
-import { deflate } from "zlib";
-import { RootState } from "../../store/store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface User {
   name: string;
