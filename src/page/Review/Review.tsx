@@ -13,8 +13,13 @@ export default function Review() {
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
     >
-      {[1, 2, 3].map((i, el) => {
-        return <SwiperSlide>Slide{el}</SwiperSlide>;
+      {[1, 2, 3, 5].map((i, el) => {
+        return (
+          <SwiperSlide>
+            Slide{el}
+            <img src="image/blog-1.jpg" />
+          </SwiperSlide>
+        );
       })}
     </Swiper>
   );
