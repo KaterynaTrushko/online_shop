@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  AnyAction,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import axios, { AxiosResponse } from "axios";
 
@@ -17,26 +22,9 @@ interface ProductState {
     data: Array<Product>;
     status: "idle" | "loading" | "succeeded" | "failed";
   };
-  filterTitle: {
-    data: Array<Product>;
-    status: "idle" | "loading" | "succeeded" | "failed";
-  };
-  filterCategory: {
-    data: Array<Product>;
-    status: "idle" | "loading" | "succeeded" | "failed";
-  };
 }
-
 const initialState: ProductState = {
   products: {
-    data: [],
-    status: "idle",
-  },
-  filterTitle: {
-    data: [],
-    status: "idle",
-  },
-  filterCategory: {
     data: [],
     status: "idle",
   },
@@ -51,48 +39,64 @@ export const productsAsync = createAsyncThunk<Product[]>(
   }
 );
 
-// export const productsFilter = createAsyncThunk<Product[], string>(
-//   "products/productsFilter",
-//   async (category, thunkApi) => {
-//     const response = await axios.get(`https://fakestoreapi.com/products`);
-//     const data = await response.data;
-//     let newData = data.filter((el: Product) => {
-//       el.category === category;
-//       return true;
-//     });
-//     return newData;
-//   }
-// );
-
 export const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
     searchByTitle: (state, action: PayloadAction<string>) => {
-      const arr = state.products.data;
+      const arr: Product[] = state.products.data;
       return {
         ...state,
-        filterTitle: {
-          ...state.filterTitle,
+        products: {
+          ...state.products,
           data: [
             ...arr.filter((el) =>
-              el.title.toLowerCase().includes(action.payload.toLowerCase())
+              el.title
+                .toLowerCase()
+                .includes(action.payload.toLocaleLowerCase())
             ),
           ],
           status: "succeeded",
         },
       };
     },
-    searchByCategory: (state, action: PayloadAction<string>) => {
-      // const arr = state.products.data;
+    filterByCategory: (state, action: PayloadAction<string>) => {
       return {
         ...state,
-        filterCategory: {
-          ...state.filterCategory,
+        products: {
+          ...state.products,
           data: [
             ...state.products.data.filter(
-              (el) => el.category === action.payload
+              (el) => el.category == action.payload
             ),
+          ],
+          status: "succeeded",
+        },
+      };
+    },
+    priceLow: (state) => {
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          data: [
+            ...state.products.data
+              .slice()
+              .sort((a, b) => (Number(a.price) > Number(b.price) ? 1 : -1)),
+          ],
+          status: "succeeded",
+        },
+      };
+    },
+    priceHigh: (state) => {
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          data: [
+            ...state.products.data
+              .slice()
+              .sort((a, b) => (Number(b.price) > Number(a.price) ? 1 : -1)),
           ],
           status: "succeeded",
         },
@@ -110,7 +114,7 @@ export const productSlice = createSlice({
         state.products.data = action.payload;
       })
       .addCase(productsAsync.rejected, (state) => {
-        state.filterTitle.status = "failed";
+        state.products.status = "failed";
       });
   },
 });
@@ -118,13 +122,8 @@ export const productSlice = createSlice({
 export default productSlice.reducer;
 
 export const { searchByTitle } = productSlice.actions;
-
-export const { searchByCategory } = productSlice.actions;
+export const { filterByCategory } = productSlice.actions;
+export const { priceLow } = productSlice.actions;
+export const { priceHigh } = productSlice.actions;
 
 export const selectProducts = (state: RootState) => state.products.products;
-
-export const selectSearchByTitle = (state: RootState) =>
-  state.products.filterTitle;
-
-export const selectByCategory = (state: RootState) =>
-  state.products.filterCategory;

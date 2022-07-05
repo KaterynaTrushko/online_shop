@@ -4,38 +4,30 @@ import cartReducer from "../page/Cart/index";
 import usersReducer from "../page/Contact/index";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
-import { persistStore, persistReducer } from "redux-persist";
-import { createTransform } from "redux-persist";
-import { Product } from "../page/Products/Products.slice";
+import { persistReducer } from "redux-persist";
 import detailReduser from "../page/Detail/index";
 
-// export const persistConfig = {
-//   key: "root",
-//   // blacklist: ["products", "detail"],
-//   storage,
-// };
+const reduser = combineReducers({
+  products: productsReduser,
+  cart: cartReducer,
+  detail: detailReduser,
+  user: usersReducer,
+});
 
-// const reduser = combineReducers({
-//   products: productsReduser,
-//   cart: cartReducer,
-//   detail: detailReduser,
-// });
+export const persistConfig = {
+  key: "root",
+  // blacklist: ["products", "detail"],
+  storage,
+};
 
-// const persistedReducer = persistReducer(persistConfig, reduser);
-
-// export const store = configureStore({
-//   reducer: {
-//     persistedReducer,
-//   },
-// });
+const persistedReducer = persistReducer(persistConfig, reduser);
 
 export const store = configureStore({
-  reducer: {
-    products: productsReduser,
-    cart: cartReducer,
-    detail: detailReduser,
-    users: usersReducer,
-  },
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

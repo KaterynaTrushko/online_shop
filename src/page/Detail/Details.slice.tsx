@@ -5,13 +5,22 @@ import axios from "axios";
 import { Product } from "../Products/Products.slice";
 
 export interface DetailState {
-  detail: Product | null;
+  detail: Product;
   status: "idle" | "loading" | "failed";
   error: string | null;
 }
 
 const initialState: DetailState = {
-  detail: null,
+  detail: {
+    id: 0,
+    title: "Title",
+    price: "0",
+    category: "product",
+    description:
+      "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    image: "https://picsum.photos/200/300",
+    rating: { rate: 5, count: 4 },
+  },
   status: "idle",
   error: "",
 };
@@ -39,12 +48,16 @@ const detailSlise = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getDetails.pending, (state) => {
+      state.status = "loading";
+    });
     builder.addCase(getDetails.fulfilled, (state, { payload }) => {
       state.detail = payload;
-      state.status = "loading";
+      state.status = "idle";
     });
     builder.addCase(getDetails.rejected, (state) => {
       state.error = "error";
+      state.status = "failed";
     });
   },
 });

@@ -9,6 +9,7 @@ import { FiSearch } from "react-icons/fi";
 import { BsEye } from "react-icons/bs";
 import { addProductToCart, getCartTotal } from "../../page/Cart/Cart.slice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getDetails } from "../../page/Detail/index";
 import { Detail } from "../../page/Detail";
 
 interface Props {
@@ -49,7 +50,11 @@ export const Card: React.FC<{ props: Product }> = ({ props }) => {
           <Link to={"#"} className={style.a}>
             <FiSearch className="style.active" />
           </Link>
-          <Link to={`/detail/${id}`} className={style.a}>
+          <Link
+            to={`/detail/${id}`}
+            onClick={() => dispatch(getDetails(id))}
+            className={style.a}
+          >
             <BsEye className="style.active" />
           </Link>
         </div>

@@ -16,13 +16,13 @@ let persistor = persistStore(store);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
-      <BrowserRouter>
-        <div className="containerApp">
-          <App />
-        </div>
-      </BrowserRouter>
-      {/* </PersistGate> */}
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <div className="containerApp">
+            <App />
+          </div>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

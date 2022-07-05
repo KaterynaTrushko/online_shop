@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from "react";
+import React, { ChangeEvent } from "react";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../store/hooks";
 import { useAppSelector } from "../../store/hooks";
@@ -7,44 +7,39 @@ import { productsAsync } from "./index";
 import { Product } from "./index";
 import { Card } from "../../componet/Card";
 import style from "./Products.module.scss";
-import { selectSearchByTitle } from "./index";
-import { searchByCategory } from "./index";
-import { selectByCategory } from "./index";
+import { filterByCategory } from "./index";
 import Skeleton from "../../componet/Skeleton";
-import { useState } from "react";
-import { useMemo } from "react";
-import { RootState } from "../../store/store";
+import { priceLow } from "./index";
+import { priceHigh } from "./index";
 
 export const Products = () => {
   const dispatch = useAppDispatch();
-  const [isSelected, setIsSlected] = useState("all");
 
   useEffect(() => {
     dispatch(productsAsync());
   }, [dispatch]);
 
-  const titleProducts = useAppSelector(selectSearchByTitle);
-
-  useEffect(() => {
-    dispatch(searchByCategory(isSelected));
-  }, [dispatch, isSelected]);
-
   const products = useAppSelector(selectProducts);
-  const categoryProducts = useAppSelector(selectByCategory);
 
-  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) =>
-    setIsSlected(e.currentTarget.value);
+  const handlerCategor = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    // dispatch(productsAsync());
+    dispatch(filterByCategory(e.currentTarget.innerText.toLowerCase()));
+  };
+
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    if (e.currentTarget.value === "priceLow") {
+      dispatch(priceLow());
+    } else if (e.currentTarget.value === "priceHigh") {
+      dispatch(priceHigh());
+    } else {
+      dispatch(productsAsync());
+    }
+  };
 
   let productsDisp = products.data.map((product: Product) => (
     <Card props={product} key={product.id} />
   ));
-  let categDisp = categoryProducts.data.map((product: Product) => (
-    <Card props={product} key={product.id} />
-  ));
-  let titleDisp = titleProducts.data.map((product: Product) => (
-    <Card props={product} key={product.id} />
-  ));
-
   return (
     <div className={style.products} id="products">
       <>
@@ -52,41 +47,46 @@ export const Products = () => {
           exclusive <span>products</span>{" "}
         </h1>
 
-        <div className={style.filter_buttons} onClick={() => {}}>
-          <div className={style.buttons}>all</div>
-          <div className={style.buttons}>electronics</div>
-          <div className={style.buttons}>jewellery</div>
-          <div className={style.buttons}>men's clothing</div>
-          <div className={style.buttons}>women's clothing</div>
+        <div className={style.filter_buttons}>
+          <div
+            onClick={() => dispatch(productsAsync())}
+            className={style.buttons}
+          >
+            all
+          </div>
+          <div onClick={handlerCategor} className={style.buttons}>
+            electronics
+          </div>
+          <div onClick={handlerCategor} className={style.buttons}>
+            jewelery
+          </div>
+          <div onClick={handlerCategor} className={style.buttons}>
+            men's clothing
+          </div>
+          <div onClick={handlerCategor} className={style.buttons}>
+            women's clothing
+          </div>
         </div>
+
         <select
           className={style.select}
-          name="categories"
-          onChange={handleSelect}
+          name="sortBy"
+          onChange={(e) => handleSelect(e)}
         >
-          <option className={style.option} value="all">
-            all
+          <option className={style.option} value="sort by">
+            sort by
           </option>
-          <option className={style.option} value="electronics">
-            electronics
+          <option className={style.option} value="priceLow">
+            price Low
           </option>
-          <option className={style.option} value="jewelery">
-            jewellery
-          </option>
-          <option className={style.option} value="men's clothing">
-            men's clothing
-          </option>
-          <option className={style.option} value="women's clothing">
-            women's clothing
+          <option className={style.option} value="priceHigh">
+            prie high
           </option>
         </select>
-        <div className={style.box_container}>
-          {categoryProducts.data.length > 1 && categDisp}
 
-          {titleProducts.data.length || categoryProducts.data.length
-            ? titleDisp || categDisp
-            : products.status !== "succeeded"
-            ? [...new Array(8)].map((product: Product, ind) => (
+        <div className={style.box_container}>
+          {products.status !== "succeeded"
+            ? [...new Array(16)].map((product: Product, ind) => (
                 <Skeleton key={ind} />
               ))
             : productsDisp}

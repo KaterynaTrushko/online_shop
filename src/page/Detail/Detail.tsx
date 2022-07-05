@@ -15,56 +15,42 @@ export function Detail() {
   const ID = Number(imdbID);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const promis = dispatch(getDetails(ID));
-    return () => {
-      // dispatch(getDetails(0));
-      // promis.abort();
-    };
-  }, [dispatch, ID]);
+  const { detail, status } = useAppSelector((state) => state.detail);
 
-  const detail = useAppSelector((state) => state.detail.detail) as Product;
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = () => {
     dispatch(addProductToCart(detail));
     dispatch(getCartTotal());
   };
 
   return (
     <>
-      {detail ? (
-        <div className={style.container}>
-          <div className={style.div}>
-            <img className={style.img} src={detail.image} alt="img" />
-          </div>
-
-          <div className={style.div}>
-            <h3>
-              <strong>title:</strong> {detail.title}
-            </h3>
-            <div>
-              <strong>id:</strong> {detail.id}
-            </div>
-            <div>
-              <strong>price:</strong> {detail.price}$
-            </div>
-            <div>
-              <strong>category:</strong> {detail.category};
-            </div>
-            {/* <div>
-              <strong>category:</strong> {detail.rating.rate};
-            </div> */}
-            <div>
-              <strong>description:</strong> {detail.description};
-            </div>
-            <button className={style.but} onClick={handleClick}>
-              Edd to cart
-            </button>
-          </div>
+      {/* {Object.keys(detail).length === 0} ? (<div>...Loading</div>) : ( */}
+      <div className={style.container}>
+        <div className={style.div}>
+          <img className={style.img} src={detail.image} alt="img" />
         </div>
-      ) : (
-        "Product not found"
-      )}
+        <div className={style.div}>
+          <h3>
+            <strong>title:</strong> {detail.title}
+          </h3>
+          <div>
+            <strong>id:</strong> {detail.id}
+          </div>
+          <div>
+            <strong>price:</strong> {detail.price}$
+          </div>
+          <div>
+            <strong>category:</strong> {detail.category};
+          </div>
+          <div>
+            <strong>description:</strong> {detail.description};
+          </div>
+          <button className={style.but} onClick={handleClick}>
+            Edd to cart
+          </button>
+        </div>
+      </div>
+      {/* ) */}
     </>
   );
 }
